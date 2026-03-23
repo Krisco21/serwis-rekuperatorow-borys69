@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serwis Rekuperatorów — Kompendium Wiedzy | Wrocław</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #FAFAFA;
+            color: #1F2937;
+            line-height: 1.6;
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero {
+            background: linear-gradient(135deg, #1E1B4B 0%, #312E81 35%, #4C1D95 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: 5%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #A78BFA;
+            margin-bottom: 12px;
+        }
+
+        .hero-title {
+            font-size: clamp(28px, 8vw, 56px);
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(14px, 2.5vw, 20px);
+            color: #E9D5FF;
+            margin-bottom: 48px;
+            font-weight: 400;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            margin-top: 40px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 12px;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .stat-box:nth-child(1) { animation-delay: 0.1s; }
+        .stat-box:nth-child(2) { animation-delay: 0.2s; }
+        .stat-box:nth-child(3) { animation-delay: 0.3s; }
+        .stat-box:nth-child(4) { animation-delay: 0.4s; }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #8B5CF6;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #D8B4FE;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        /* ========== MAIN GRID ========== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .grid-view {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        /* ========== CARDS ========== */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            border: 1px solid #F3F4F6;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+            border-color: #E5E7EB;
+        }
+
+        .card-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #111827;
+        }
+
+        .card-subtitle {
+            font-size: 13px;
+            color: #6B7280;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Tag colors by section */
+        .tag-1 { background: #F3E8FF; color: #7C3AED; } /* Violet */
+        .tag-2 { background: #DBEAFE; color: #3B82F6; } /* Blue */
+        .tag-3 { background: #DCFCE7; color: #059669; } /* Green */
+        .tag-4 { background: #FED7AA; color: #D97706; } /* Orange */
+        .tag-5 { background: #FEE2E2; color: #DC2626; } /* Red */
+        .tag-6 { background: #F3E8FF; color: #9333EA; } /* Purple */
+        .tag-7 { background: #CFFAFE; color: #0891B2; } /* Cyan */
+        .tag-8 { background: #F3E8FF; color: #7C3AED; } /* Violet */
+        .tag-9 { background: #DBEAFE; color: #3B82F6; } /* Blue */
+        .tag-10 { background: #DCFCE7; color: #059669; } /* Green */
+
+        /* ========== DETAIL VIEW ========== */
+        .detail-view {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .detail-view.active {
+            display: block;
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #F3F4F6;
+        }
+
+        .back-button {
+            background: #F3F4F6;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .back-button:hover {
+            background: #E5E7EB;
+            color: #111827;
+        }
+
+        .detail-icon {
+            font-size: 48px;
+        }
+
+        .detail-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .breadcrumb {
+            font-size: 12px;
+            color: #9CA3AF;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        /* ========== CONTENT BLOCKS ========== */
+        .content-block {
+            margin-bottom: 32px;
+        }
+
+        .block-heading {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-left: 4px solid #7C3AED;
+            padding-left: 12px;
+        }
+
+        .block-heading.color-1 { border-left-color: #7C3AED; color: #7C3AED; }
+        .block-heading.color-2 { border-left-color: #3B82F6; color: #3B82F6; }
+        .block-heading.color-3 { border-left-color: #059669; color: #059669; }
+        .block-heading.color-4 { border-left-color: #D97706; color: #D97706; }
+        .block-heading.color-5 { border-left-color: #DC2626; color: #DC2626; }
+        .block-heading.color-6 { border-left-color: #9333EA; color: #9333EA; }
+        .block-heading.color-7 { border-left-color: #0891B2; color: #0891B2; }
+
+        .bullet-list {
+            list-style: none;
+        }
+
+        .bullet-list li {
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #374151;
+        }
+
+        .bullet-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 8px;
+            height: 8px;
+            background: currentColor;
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+
+        .bullet-list.color-1 li::before { color: #7C3AED; }
+        .bullet-list.color-2 li::before { color: #3B82F6; }
+        .bullet-list.color-3 li::before { color: #059669; }
+        .bullet-list.color-4 li::before { color: #D97706; }
+        .bullet-list.color-5 li::before { color: #DC2626; }
+        .bullet-list.color-6 li::before { color: #9333EA; }
+        .bullet-list.color-7 li::before { color: #0891B2; }
+
+        .detail-text {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #374151;
+            margin-bottom: 12px;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: #F3F4F6;
+            padding: 32px 20px;
+            text-align: center;
+            margin-top: 60px;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: #6B7280;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ========== ANIMATIONS ========== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 40px 16px;
+            }
+
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .hero-subtitle {
+                font-size: 14px;
+            }
+
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .stat-box {
+                padding: 16px;
+            }
+
+            .grid-view {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-title {
+                font-size: 24px;
+            }
+
+            .container {
+                padding: 16px;
+            }
+        }
+
+        /* ========== UTILITY ========== */
+        .hidden {
+            display: none !important;
+        }
+
+        .scroll-lock {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-label">Kompendium Wiedzy</div>
+            <h1 class="hero-title">Serwis Rekuperatorów</h1>
+            <p class="hero-subtitle">Wrocław i okolice — kompletny poradnik startowy dla Borysa</p>
+            <div class="hero-stats">
+                <div class="stat-box">
+                    <span class="stat-number">10</span>
+                    <span class="stat-label">Rozdziałów</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Źródła AI</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">90</span>
+                    <span class="stat-label">Dni do startu</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">~12k</span>
+                    <span class="stat-label">PLN/mies. cel</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+        <!-- GRID VIEW -->
+        <div class="grid-view" id="gridView">
+            <!-- Cards will be inserted here by JS -->
+        </div>
+
+        <!-- DETAIL VIEW -->
+        <div class="detail-view" id="detailView">
+            <button class="back-button" onclick="showGrid()">← Powrót do spisu</button>
+            <div id="detailContent"></div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-text">
+            Opracowanie na podstawie deep research z 3 źródeł AI (ChatGPT, Gemini, Claude) — dane zweryfikowane i zdeduplikowane. Marzec 2026.
+        </div>
+    </footer>
+
+    <script>
+        // ========== DATA ==========
+        const sections = [
+            {
+                id: 1,
+                icon: '📊',
+                title: 'Analiza rynku',
+                subtitle: 'Dlaczego warto? Twarde dane.',
+                tags: ['GUS', 'Dolny Śląsk', 'Czyste Powietrze'],
+                tagColor: 'tag-1',
+                color: '#7C3AED',
+                blocks: [
+                    {
+                        heading: 'Skala zainstalowanej bazy',
+                        headingColor: 'color-1',
+                        content: [
+                            'W 2025 r. w Polsce oddano 208,8 tys. mieszkań (GUS) — z tego 67,6 tys. przez inwestorów indywidualnych',
+                            'Na Dolnym Śląsku w 2024 r. oddano 7 239 nowych budynków mieszkalnych',
+                            'Praktycznie każdy nowy dom jednorodzinny od 2021 r. ma rekuperację',
+                            'Urządzenia z lat 2018–2022 masowo wychodzą z gwarancji (2–5 lat)'
+                        ]
+                    },
+                    {
+                        heading: 'Konkurencja — luka rynkowa',
+                        headingColor: 'color-1',
+                        content: [
+                            'Oferteo: ~1 056 firm w kategorii \'montaż rekuperacji\' we Wrocławiu',
+                            'Fixly: 1 526 wykonawców wentylacji w regionie',
+                            'ALE: większość to montażyści — niezależnych serwisantów z pomiarami i automatyką jest niewielu',
+                            'Luka nie polega na \'braku kogokolwiek\', lecz na braku rzetelnego serwisu diagnostycznego z pomiarami i protokołem'
+                        ]
+                    },
+                    {
+                        heading: 'Czynniki wzrostu',
+                        headingColor: 'color-1',
+                        content: [
+                            'Program Czyste Powietrze (nowa edycja od 31 marca) — dotacje na rekuperację',
+                            'Dyrektywa EPBD (EU/2024/1275) — zaostrzenie norm energetycznych budynków',
+                            'Maksymalny wskaźnik EP: 70 kWh/(m²·rok) dla budynków jednorodzinnych',
+                            'Serwis jest cykliczny (min. 1×/rok) = powtarzalny przychód',
+                            'Rekuperacja to inwestycja ~16–25 tys. zł — właściciele wolą serwis niż wymianę centrali'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 2,
+                icon: '🎓',
+                title: 'Kompetencje',
+                subtitle: 'Czego się nauczyć, gdzie się szkolić.',
+                tags: ['HVAC', 'Automatyka', 'SEP'],
+                tagColor: 'tag-2',
+                color: '#3B82F6',
+                blocks: [
+                    {
+                        heading: 'Must-have (konieczne na start)',
+                        headingColor: 'color-2',
+                        content: [
+                            'Zasady wentylacji mechanicznej — bilans powietrza, obliczanie zapotrzebowania',
+                            'Budowa rekuperatora — wymiennik (krzyżowy/przeciwprądowy/obrotowy), wentylatory EC/AC, bypass, nagrzewnica',
+                            'Pomiary przepływów i bilansowanie instalacji — anemometr, interpretacja wyników',
+                            'Diagnostyka automatyki — sterowniki, czujniki CO₂/wilgotności, tryby AUTO, alarmy',
+                            'Czyszczenie i konserwacja — wymiennik, wentylatory, kanał czerpni/wyrzutni',
+                            'Odprowadzanie skroplin — najczęstsza przyczyna awarii w zimie',
+                            'Elektryka 230 V i bezpieczeństwo pracy — większość central ma zasilanie sieciowe'
+                        ]
+                    },
+                    {
+                        heading: 'Nice-to-have (buduje przewagę)',
+                        headingColor: 'color-2',
+                        content: [
+                            'SEP do 1 kV — przydatne przy obwodach elektrycznych rekuperatora',
+                            'Miernictwo ciśnień — ocena spadków ciśnień na filtrach i instalacji',
+                            'Termowizja — wykrywanie nieszczelności i mostków cieplnych',
+                            'Certyfikat F-gazowy — jeśli rozszerzenie o klimatyzację',
+                            'Podstawy BMS / smart home — integracje z systemami budynkowymi'
+                        ]
+                    },
+                    {
+                        heading: 'Szkolenia — konkretne opcje',
+                        headingColor: 'color-2',
+                        content: [
+                            'PEFLEX (peflex.eu/kurs) — kurs online ~500 PLN — teoria + praktyka, idealny na start',
+                            'Akademia Klimatyzacji — szkolenie stacjonarne ~2 000 PLN — serwis, diagnostyka, regulacja',
+                            'ON-ECO / ATUM / MTS — kurs wentylacji mechanicznej 1 500–3 000 PLN',
+                            'Szkolenia producenckie (Pro-Vent, Thessla, Zehnder) — często bezpłatne, klucz do autoryzacji',
+                            'SEP do 1 kV — ośrodki SEP, 300–600 PLN'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 3,
+                icon: '🔧',
+                title: 'Narzędzia',
+                subtitle: 'Co kupić na start, co później.',
+                tags: ['Podstawowe', 'Profesjonalne', 'Koszty'],
+                tagColor: 'tag-3',
+                color: '#059669',
+                blocks: [
+                    {
+                        heading: 'Zestaw minimalny (3 000–5 000 PLN)',
+                        headingColor: 'color-3',
+                        content: [
+                            'Anemometr (Testo 417 / CEM DT-618B) — 300–800 PLN',
+                            'Odkurzacz przemysłowy z HEPA (Kärcher WD 5 / Bosch GAS 35) — 500–900 PLN',
+                            'Multimetr + próbnik (Uni-T UT61E) — 100–200 PLN',
+                            'Zestaw śrubokrętów/kluczy (Wiha, Wera, Yato) — 200–400 PLN',
+                            'Latarka czołowa LED (Ledlenser H7R) — 100–200 PLN',
+                            'Środki czyszczące + dezynfekcja (Clinex, Tenzi Bio-Vent) — 100–200 PLN',
+                            'Wąż do płukania skroplin, folia, ręczniki, odzież robocza — 200–400 PLN'
+                        ]
+                    },
+                    {
+                        heading: 'Zestaw profesjonalny (dodatkowe 3 000–8 000 PLN)',
+                        headingColor: 'color-3',
+                        content: [
+                            'Miernik różnicy ciśnień — ocena spadków na filtrach/instalacji',
+                            'Generator ozonu (400–1 000 PLN) — ozonowanie jako usługa dodatkowa za 200–250 PLN',
+                            'Kamera termowizyjna (2 000–5 000 PLN) — nieszczelności, mostki cieplne',
+                            'Endoskop / kamera inspekcyjna (300–800 PLN) — wnętrze kanałów',
+                            'Miernik CO₂/TVOC i wilgotności (200–500 PLN) — diagnostyka komfortu',
+                            'Balometr / hood do pomiarów na anemostatach — szybkie, powtarzalne pomiary',
+                            'Laptop/tablet z oprogramowaniem do konfiguracji sterowników'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 4,
+                icon: '🏭',
+                title: 'Producenci',
+                subtitle: 'Od których marek zacząć.',
+                tags: ['Pro-Vent', 'Thessla', 'Zehnder', '+5'],
+                tagColor: 'tag-4',
+                color: '#D97706',
+                blocks: [
+                    {
+                        heading: 'Pierwsza piątka (opanuj na start)',
+                        headingColor: 'color-4',
+                        content: [
+                            'Pro-Vent (S-Line 800, Mistral Pro) — lider rozpoznawalności w PL, ogromna baza zainstalowana → NAJWYŻSZY priorytet',
+                            'Thessla Green (AirPack 4, AirPack Home) — certyfikat Passive House, dużo na Dolnym Śląsku → WYSOKI',
+                            'Zehnder / AERIS (AERISnext 350/450) — segment premium, sprawność 94%, dobra dokumentacja serwisowa → WYSOKI',
+                            'Komfovent (Domekt R 400 V) — popularny w segmencie średnim/wyższym, często w ofertach instalacyjnych regionu → ŚREDNI',
+                            'Alnor (HRU-Wall, HRU-SlimAIR) — mocny polski gracz, dużo w starszych instalacjach, proste w serwisie → ŚREDNI'
+                        ]
+                    },
+                    {
+                        heading: 'Dodatkowe marki (rozszerzenie oferty)',
+                        headingColor: 'color-4',
+                        content: [
+                            'Vallox — \'filtry premium / oryginalne\', wpływ na ciśnienia i wentylację budynku',
+                            'Salda (RIRS 400 VE/VW) — segment ekonomiczny, spotykany w regionie',
+                            'Dospel (Luna 350, Selen 500) — segment budżetowy, sporo w okolicznych domach',
+                            'Stiebel Eltron — pojawia się w ofertach instalacyjnych w okolicy',
+                            'Rotenso (Rutto 350/450) — nowszy producent, rośnie'
+                        ]
+                    },
+                    {
+                        heading: 'Strategia: 2–3 marki \'na pamięć\'',
+                        headingColor: 'color-4',
+                        content: [
+                            'Zacznij od Pro-Vent + Thessla Green — to pokryje większość zleceń',
+                            'Zgłoś się po szkolenia producenckie (często darmowe) → droga do autoryzacji',
+                            'Autoryzowany serwisant = producent przekierowuje klientów pogwarancyjnych z regionu',
+                            'Pozostałe marki: \'case by case\' z jasnym cennikiem diagnostyki',
+                            'Gdzie kupować części: bezpośrednio u producentów, kupfiltry.pl, hurtownie (Bims Plus, SIG)'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 5,
+                icon: '💰',
+                title: 'Usługi i cennik',
+                subtitle: 'Co sprzedawać, ile brać.',
+                tags: ['Pakiety', 'Stawki', 'Dojazd'],
+                tagColor: 'tag-5',
+                color: '#DC2626',
+                blocks: [
+                    {
+                        heading: 'Pakiety usług (3–4 na start)',
+                        headingColor: 'color-5',
+                        content: [
+                            'PRZEGLĄD ROCZNY STANDARD (490–650 PLN brutto) — wymiana filtrów, czyszczenie wymiennika, kontrola wentylatorów, odpływ skroplin, pomiar przepływów, weryfikacja sterownika',
+                            'SERWIS CENTRALI bez filtrów (350–450 PLN brutto) — \'tańsza wersja\' jako przynęta marketingowa, z opcją dopłaty za pomiary/regulację',
+                            'POMIARY I REGULACJA / BALANSOWANIE (450–650 PLN brutto) — pomiar na anemostatach, korekta nastaw, raport z wynikami → wyróżnik na rynku',
+                            'OZONOWANIE / DEZYNFEKCJA (200–300 PLN) — dodatkowa usługa, 20 min pracy, robi wrażenie na kliencie',
+                            'DIAGNOSTYKA AWARII (150–250 PLN kwota startowa + 150–250 PLN/h) — wymiana wentylatora, automatyka, dojazd >25 km: +2 PLN/km'
+                        ]
+                    },
+                    {
+                        heading: 'Złote zasady cenowe',
+                        headingColor: 'color-5',
+                        content: [
+                            'Pakiet \'przegląd + ozonowanie\' za ~550 PLN to najlepszy produkt na start',
+                            'Dojazd w promieniu 25 km — w cenie. Powyżej — 2 PLN/km',
+                            'UMOWA ROCZNA (2 przeglądy) — 700–1 000 PLN/rok. To buduje stały portfel klientów',
+                            'Na start: dolna granica stawek. Podnoś ceny wraz z reputacją i opiniami Google',
+                            'Serwis \'z pomiarami + protokół\' = cena serwisu technicznego, nie \'sprzątania\'',
+                            'KPI: ile zleceń kończy się raportem + poleceniem? Ile przechodzi na umowę roczną?'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 6,
+                icon: '⚠️',
+                title: 'Najczęstsze awarie',
+                subtitle: '80% zleceń to te same problemy.',
+                tags: ['Filtry', 'Wentylatory', 'Skropliny'],
+                tagColor: 'tag-6',
+                color: '#9333EA',
+                blocks: [
+                    {
+                        heading: 'Łatwe (opanuj w pierwszej kolejności)',
+                        headingColor: 'color-6',
+                        content: [
+                            'Spadek wydajności / słaby nawiew → brudne filtry, zapchane anemostaty, brudny wymiennik',
+                            'Woda w centrali / pod rekuperatorem → zapchany odpływ skroplin, źle wyprofilowany syfon',
+                            'Nieprzyjemny zapach z nawiewu → grzyb/pleśń w wymienniku lub kanałach + stare filtry → czyszczenie + dezynfekcja + ozonowanie'
+                        ]
+                    },
+                    {
+                        heading: 'Średnie (wymagają doświadczenia)',
+                        headingColor: 'color-6',
+                        content: [
+                            'Hałas z rekuperatora (stukanie, szum) → zużycie łożysk wentylatora, niewyważone wirniki → wymiana wentylatora lub łożysk',
+                            'Zamarzanie wymiennika w zimie → brak/awaria nagrzewnicy wstępnej, źle ustawiony bypass',
+                            'Awaria wentylatora (nie kręci się) → zużycie silnika EC/AC → zamówienie i wymiana u producenta'
+                        ]
+                    },
+                    {
+                        heading: 'Trudne (budują reputację eksperta)',
+                        headingColor: 'color-6',
+                        content: [
+                            'Błędy na sterowniku, rekuperator się wyłącza → awaria czujnika, problem z płytą elektroniczną',
+                            'Diagnostyka automatyki — logika trybów, czujniki, alarmy, integracje smart home',
+                            'Problemy po złym montażu — źle dobrane przekroje kanałów, brak izolacji, mostki cieplne'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 7,
+                icon: '📋',
+                title: 'Rejestracja firmy',
+                subtitle: 'JDG, PKD, podatki, ZUS.',
+                tags: ['CEIDG', 'Ryczałt', 'PKD'],
+                tagColor: 'tag-7',
+                color: '#0891B2',
+                blocks: [
+                    {
+                        heading: 'Kody PKD',
+                        headingColor: 'color-7',
+                        content: [
+                            '43.22.Z — Wykonywanie instalacji wod-kan, cieplnych, gazowych i klimatyzacyjnych (GŁÓWNY)',
+                            '33.12.Z — Naprawa i konserwacja maszyn',
+                            '33.19.Z — Naprawa i konserwacja pozostałego sprzętu i wyposażenia',
+                            '43.29.Z — Wykonywanie pozostałych instalacji budowlanych (opcjonalnie)'
+                        ]
+                    },
+                    {
+                        heading: 'Checklist rejestracji',
+                        headingColor: 'color-7',
+                        content: [
+                            '1. Rejestracja JDG w CEIDG — online na biznes.gov.pl (za darmo, 1 dzień)',
+                            '2. Forma opodatkowania: RYCZAŁT 8,5% — złoty strzał dla usług serwisowych',
+                            '3. Konto firmowe — ING, mBank mają darmowe konta',
+                            '4. ZUS — \'Ulga na start\' 6 mies. bez składek, potem \'Mały ZUS\' ~400 PLN/mies.',
+                            '5. VAT — zwolnienie do 200 000 PLN obrotu/rok. Na start: BEZ VAT',
+                            '6. OC działalności — 300–600 PLN/rok (nieobowiązkowe, ale zdecydowanie warto)',
+                            '7. Fakturowanie — iFirma / Fakturownia / inFakt (0–50 PLN/mies.)'
+                        ]
+                    },
+                    {
+                        heading: 'Dokumentacja serwisowa (chroni przed reklamacjami)',
+                        headingColor: 'color-7',
+                        content: [
+                            'Protokół z pomiarów (przed/po) — buduje zaufanie i pozwala utrzymać cenę \'serwisu technicznego\'',
+                            'Zdjęcia filtrów/wymiennika/wnętrza — \'przed i po\'',
+                            'Lista zaleceń (np. \'odpływ skroplin do poprawy\') — brak dokumentacji może skutkować roszczeniami',
+                            'Raport po wizycie (PDF lub mail): co zrobiono + wyniki + zalecenia + następny termin → klucz do poleceń'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 8,
+                icon: '📢',
+                title: 'Marketing',
+                subtitle: 'Jak zdobyć klientów.',
+                tags: ['Google', 'Oferteo', 'Partnerstwa'],
+                tagColor: 'tag-8',
+                color: '#7C3AED',
+                blocks: [
+                    {
+                        heading: 'Online (najwyższy ROI)',
+                        headingColor: 'color-1',
+                        content: [
+                            'Google Moja Firma (Mapy Google) — 0 PLN, 50% klientów szuka lokalnie → NAJWYŻSZA efektywność',
+                            'Oferteo.pl — odpowiadaj na zapytania z regionu (0–200 PLN/mies.) → dużo zapytań z Wrocławia',
+                            'Fixly.pl — analogicznie (0–150 PLN/mies.)',
+                            'Facebook — grupy osiedlowe, \'rekuperacja\', \'budowa domu\' → buduj relacje, nie spamuj',
+                            'Strona WWW + lokalne SEO — domena + 1-pager z cennikiem (500–1 500 PLN jednorazowo)',
+                            'Google Ads (później) — \'serwis rekuperatora Wrocław\' (500–1 000 PLN/mies., dopiero gdy masz opinie)'
+                        ]
+                    },
+                    {
+                        heading: 'Offline i partnerstwa',
+                        headingColor: 'color-1',
+                        content: [
+                            'Współpraca z firmami montażowymi — oni nie chcą jeździć na serwisy, chętnie polecą (model B2B \'podwykonawca od serwisu\')',
+                            'Magnesy na lodówkę — \'Następny przegląd za 12 mies.\' + numer telefonu (10× skuteczniejszy niż ulotka)',
+                            'Skrzynkowanie ulotek — osiedla domów z lat 2018–2023 (Kąty Wrocławskie, Siechnice, Kobierzyce, Czernica)',
+                            'Hurtownie budowlane — wizytówki u lokalnych sprzedawców rekuperatorów',
+                            'Program referencyjny — \'50 PLN rabatu za każdego poleconego klienta\''
+                        ]
+                    },
+                    {
+                        heading: 'Komunikaty, które sprzedają',
+                        headingColor: 'color-1',
+                        content: [
+                            '\'Serwis roczny + pomiary i regulacja + raport PDF\' (jakość + dowód)',
+                            '\'Szybka diagnostyka hałasu / spadku wydajności / błędów sterownika\' (automatyka)',
+                            '\'Przegląd odpływu skroplin i zabezpieczenie przed kondensatem\' (bezpieczeństwo urządzenia)',
+                            'W ogłoszeniu: \'Serwis zgodny z wymogami producenta; współpraca lub serwis pogwarancyjny\'',
+                            'PIERWSZYCH 10 KLIENTÓW: przegląd za 50% ceny w zamian za opinię Google → fundament biznesu'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 9,
+                icon: '📈',
+                title: 'Model finansowy',
+                subtitle: 'Inwestycja, przychody, break-even.',
+                tags: ['ROI', 'Koszty', 'Prognoza'],
+                tagColor: 'tag-9',
+                color: '#3B82F6',
+                blocks: [
+                    {
+                        heading: 'Inwestycja startowa: 9 000–16 000 PLN',
+                        headingColor: 'color-2',
+                        content: [
+                            'Szkolenia (2 kursy + producenckie): 3 000–5 000 PLN',
+                            'Narzędzia — zestaw podstawowy + ozonator: 3 500–6 000 PLN',
+                            'Strona WWW + domena + hosting: 500–1 500 PLN',
+                            'Wizytówki, magnesy, ulotki: 300–500 PLN',
+                            'Oklejenie samochodu: 800–2 000 PLN',
+                            'Rezerwa na paliwo i start: 1 000 PLN'
+                        ]
+                    },
+                    {
+                        heading: 'Prognoza przychodów (scenariusz realistyczny)',
+                        headingColor: 'color-2',
+                        content: [
+                            'Miesiąc 1–2 (rozruch): 3–4 serwisy/tyg × 500 PLN = 5 400–7 200 PLN/mies.',
+                            'Miesiąc 3–4 (wzrost): 5–7 serwisów/tyg = 10 000–14 000 PLN/mies.',
+                            'Miesiąc 5–8 (stabilizacja): 8–10 serwisów/tyg = 16 000–20 000 PLN/mies.',
+                            'Miesiąc 9–12 (dojrzałość): 10–12 serwisów/tyg = 20 800–24 960 PLN/mies.',
+                            'Robocza konstrukcja: 2 wizyty dziennie w tygodniu + 1 w sobotę'
+                        ]
+                    },
+                    {
+                        heading: 'Koszty stałe: 1 300–2 450 PLN/mies.',
+                        headingColor: 'color-2',
+                        content: [
+                            'ZUS (Mały ZUS): ~400 PLN',
+                            'Paliwo (1 000–1 500 km/mies.): 500–800 PLN',
+                            'Filtry / części (zapas obrotowy): 300–500 PLN',
+                            'Fakturowanie / księgowość: 0–150 PLN',
+                            'Telefon / internet: 100 PLN',
+                            'Marketing online: 0–500 PLN',
+                            '→ Zarobek netto: 8 000–12 000 PLN/mies. od 5–6 miesiąca. Zwrot inwestycji: 2–3 miesiące'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 10,
+                icon: '🚀',
+                title: 'Plan 90 dni',
+                subtitle: 'Tydzień po tygodniu.',
+                tags: ['Start', 'Wzrost', 'Skalowanie'],
+                tagColor: 'tag-10',
+                color: '#059669',
+                blocks: [
+                    {
+                        heading: 'Tydzień 1–2: Przygotowanie',
+                        headingColor: 'color-3',
+                        content: [
+                            'Zapisz się na kurs online PEFLEX (wentylacja mechaniczna od A do Z)',
+                            'Zarejestruj JDG w CEIDG — PKD 43.22.Z + 33.12.Z + 33.19.Z',
+                            'Zamów wizytówki i magnesy na lodówkę (projekt na Canva)',
+                            'Załóż wizytówkę Google Moja Firma + profil na Oferteo i Fixly',
+                            'Kup zestaw narzędzi podstawowych + generator ozonu',
+                            'Przygotuj checklistę serwisową (1 kartka: filtry, wymiennik, skropliny, czerpnia, sterownik)',
+                            'Ustal cennik w 3 pakietach + cennik dojazdu'
+                        ]
+                    },
+                    {
+                        heading: 'Tydzień 3–4: Nauka i pierwsze zlecenia',
+                        headingColor: 'color-3',
+                        content: [
+                            'Ukończ kurs online. Oglądaj filmy serwisowe na YouTube (PEFLEX, Pro-Vent, Ventermo)',
+                            'Zgłoś się na szkolenia producenckie (Pro-Vent, Thessla Green)',
+                            'PIERWSZE 5–10 SERWISÓW: znajomi, sąsiedzi, rodzina — za 50% ceny w zamian za opinię Google',
+                            'Po każdym serwisie: zdjęcie \'przed i po\', raport z wynikami → buduj portfolio',
+                            'Zidentyfikuj najczęściej spotykane marki w realnych domach'
+                        ]
+                    },
+                    {
+                        heading: 'Tydzień 5–8: Budowanie bazy',
+                        headingColor: 'color-3',
+                        content: [
+                            'Szkolenie stacjonarne w Akademii Klimatyzacji (2 dni)',
+                            'Odpowiadaj na zapytania z Oferteo/Fixly — minimum 5 ofert dziennie',
+                            'Skrzynkowanie ulotek na 3–5 osiedlach (Kąty Wrocławskie, Siechnice, Kobierzyce, Czernica)',
+                            'Kontakt z 5–10 firmami montażowymi — propozycja współpracy serwisowej (B2B)',
+                            'Prosta strona internetowa z cennikiem i formularzem kontaktowym',
+                            'Przejście na model mieszany: serwisy roczne + pomiary jako \'premium add-on\''
+                        ]
+                    },
+                    {
+                        heading: 'Tydzień 9–12: Skalowanie',
+                        headingColor: 'color-3',
+                        content: [
+                            'Cel: 6–8 serwisów tygodniowo. Oferuj umowy roczne (2 przeglądy/rok)',
+                            'Zbieranie opinii Google — cel: min. 15 opinii z 5★ do końca 3 miesiąca',
+                            'Rozpoczęcie współpracy z producentami (autoryzacja serwisowa)',
+                            'Rozważ Google Ads na frazę \'serwis rekuperatora Wrocław\'',
+                            'Diagnostyka automatyki i \'przywracanie komfortu\' — tu wygrać kompetencją, nie ceną',
+                            'KPI: ile zleceń kończy się raportem + poleceniem? Ile klientów przeszło na umowę roczną?',
+                            'Ewaluacja: co działa, co nie? Które kanały przyniosły klientów?'
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // ========== FUNCTIONS ==========
+        function showGrid() {
+            document.getElementById('gridView').classList.remove('hidden');
+            document.getElementById('detailView').classList.remove('active');
+        }
+
+        function showDetail(sectionId) {
+            const section = sections.find(s => s.id === sectionId);
+            if (!section) return;
+
+            document.getElementById('gridView').classList.add('hidden');
+            document.getElementById('detailView').classList.add('active');
+
+            let detailHTML = `
+                <div class="detail-header">
+                    <button class="back-button" onclick="showGrid()">← Powrót do spisu</button>
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span class="detail-icon">${section.icon}</span>
+                            <div>
+                                <h1 class="detail-title">${section.title}</h1>
+                                <div class="breadcrumb">Sekcja ${sectionId} / 10</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            section.blocks.forEach((block, idx) => {
+                detailHTML += `
+                    <div class="content-block">
+                        <h2 class="block-heading ${block.headingColor}">${block.heading}</h2>
+                        <ul class="bullet-list ${block.headingColor}">
+                            ${block.content.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            });
+
+            document.getElementById('detailContent').innerHTML = detailHTML;
+            window.scrollTo(0, 0);
+        }
+
+        // ========== RENDER GRID ==========
+        function renderGrid() {
+            const gridView = document.getElementById('gridView');
+            gridView.innerHTML = sections.map(section => `
+                <div class="card" onclick="showDetail(${section.id})">
+                    <span class="card-icon">${section.icon}</span>
+                    <h3 class="card-title">${section.title}</h3>
+                    <p class="card-subtitle">${section.subtitle}</p>
+                    <div class="card-tags">
+                        ${section.tags.map(tag => `<span class="tag ${section.tagColor}">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ========== INIT ==========
+        document.addEventListener('DOMContentLoaded', renderGrid);
+    </script>
+</body>
+</html>
